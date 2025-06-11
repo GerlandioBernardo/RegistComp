@@ -32,7 +32,7 @@ model Cliente {
   cidade        String
   estado        String
   comercianteId String
-  comerciante   Comerciante @relation(fields: [comercianteId], references: [id])
+  comerciante   Comerciante @relation(fields: [comercianteId], references: [id], onDelete: Cascade)
   compras       Compra[]
 
   @@unique([cpf, comercianteId])
@@ -44,7 +44,7 @@ model Compra {
   data       DateTime     @default(now())
   valorTotal Float
   clienteId  String
-  cliente    Cliente      @relation(fields: [clienteId], references: [id])
+  cliente    Cliente      @relation(fields: [clienteId], references: [id], onDelete: Cascade)
   itens      ItemCompra[]
 
   @@map("compras")
@@ -57,7 +57,7 @@ model ItemCompra {
   precoUnitario Float
   valorTotal    Float
   compraId      String
-  compra        Compra @relation(fields: [compraId], references: [id])
+  compra        Compra @relation(fields: [compraId], references: [id], onDelete: Cascade)
 
   @@map("itensCompras")
 }
