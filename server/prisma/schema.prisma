@@ -21,6 +21,7 @@ model Comerciante {
   senha           String
   nomeComercial   String
   cpf             String                   @unique
+  fotoPerfil      String?
 
   clientes        Cliente[]
 

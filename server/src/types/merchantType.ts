@@ -7,5 +7,6 @@ export type comercianteType = {
     email: string;
     senha: string;
     nomeComercial: string;
+    fotoPerfil?: string;
     clientes: customerType[];
 }
