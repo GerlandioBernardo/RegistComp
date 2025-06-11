@@ -9,6 +9,18 @@ export async function findMerchantById(id: string){
     })
 }
 
+export async function getClients(id: string){
+    const clients = await prisma.comerciante.findUnique({
+        where:{
+            id
+        },
+        select:{
+            clientes: true
+        }
+    })
+    return clients;
+}
+
 export async function updateMerchant(id: string, newMerchantData: comercianteType){
     const merchant = await prisma.comerciante.update({
         where:{

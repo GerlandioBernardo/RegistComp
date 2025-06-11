@@ -1,10 +1,11 @@
 import {Router} from "express";
 import {updateMerchant, deleteMerchant, 
-    updateProfilePicture} from "../controllers/merchantController";
+    updateProfilePicture, getClients} from "../controllers/merchantController";
 import { uploadFileMiddleware } from "../middlewares/uploadFileMiddleware";
 
 const merchantRoute = Router();
 
+merchantRoute.get('/clients', getClients)
 merchantRoute.patch('/', updateMerchant);
 merchantRoute.delete('/', deleteMerchant);
 
