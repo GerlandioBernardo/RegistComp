@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,65 +9,55 @@ datasource db {
 }
 
 model Comerciante {
-  id              String                   @id @default(uuid())
-  nome            String
-  email           String                   @unique
-  senha           String
-  nomeComercial   String
-  cpf             String                   @unique
-  fotoPerfil      String?
-
-  clientes        Cliente[]
+  id            String    @id @default(uuid())
+  nome          String
+  email         String    @unique
+  senha         String
+  nomeComercial String
+  cpf           String    @unique
+  fotoPerfil    String?
+  clientes      Cliente[]
 
   @@map("comerciantes")
 }
 
 model Cliente {
-  id              String                   @id @default(uuid())
-  nome            String
-  cpf             String       
-  telefone        String
-
-  rua             String
-  numero          Int
-  bairro          String
-  cidade          String
-  estado          String
-
-  comercianteId   String                      
-  comerciante     Comerciante @relation(fields: [comercianteId], references: [id]) 
-  
-  compras         Compra[]
+  id            String      @id @default(uuid())
+  nome          String
+  cpf           String
+  telefone      String
+  rua           String
+  numero        Int
+  bairro        String
+  cidade        String
+  estado        String
+  comercianteId String
+  comerciante   Comerciante @relation(fields: [comercianteId], references: [id])
+  compras       Compra[]
 
   @@unique([cpf, comercianteId])
   @@map("clientes")
 }
 
 model Compra {
-  id              String        @id @default(uuid())
-  data            DateTime      @default(now())
-  valorTotal      Float 
-
-  clienteId       String
-  cliente         Cliente  @relation(fields: [clienteId], references: [id])
-
-  itens           ItemCompra[]
-
+  id         String       @id @default(uuid())
+  data       DateTime     @default(now())
+  valorTotal Float
+  clienteId  String
+  cliente    Cliente      @relation(fields: [clienteId], references: [id])
+  itens      ItemCompra[]
 
   @@map("compras")
 }
-model ItemCompra {
-  id              String        @id @default(uuid())
-  nome            String 
-  quantidade      Int
-  precoUnitario   Float
-  valorTotal      Float
 
-  compraId        String
-  compra          Compra        @relation(fields: [compraId], references: [id])
+model ItemCompra {
+  id            String @id @default(uuid())
+  nome          String
+  quantidade    Int
+  precoUnitario Float
+  valorTotal    Float
+  compraId      String
+  compra        Compra @relation(fields: [compraId], references: [id])
 
   @@map("itensCompras")
 }
-
-
-
