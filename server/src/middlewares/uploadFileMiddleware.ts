@@ -47,7 +47,6 @@ export const uploadFileMiddleware = [
     try {
         const file = req.file;
         if(!file){
-            req.body.fotoPerfil ="https://i.ibb.co/TxknvgR5/4e90b2cab3ba.png"
             return next();
         }
         const urlImg = await apiUrl(file.buffer);

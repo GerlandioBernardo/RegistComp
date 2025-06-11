@@ -39,3 +39,18 @@ export async function deleteMerchant(id: string){
     })
     return merchant;
 }
+
+export async function updateProfilePicture(id: string, image: string){
+    const newImage = await prisma.comerciante.update({
+        where:{
+            id
+        }, 
+        data:{
+            fotoPerfil: image,
+        }, 
+        select:{
+            fotoPerfil: true
+        }
+    })
+    return newImage;
+}

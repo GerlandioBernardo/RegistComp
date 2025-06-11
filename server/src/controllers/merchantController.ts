@@ -45,3 +45,28 @@ export async function deleteMerchant(req: Request, res: Response){
         res.status(500).json({message: "Internal Server Error"});
     }
 }
+
+// rota para upload de imagem
+
+export async function updateProfilePicture(req: Request, res: Response){
+    try {
+        const {merchantId, fotoPerfil} = req.body
+
+        const merchantExists = await merchantService.findMerchantById(merchantId);
+        if(!merchantExists){
+            res.status(404).json({message: "Usuario não existente"});
+            return;
+        }
+        const newUrlImage = await merchantService.updateProfilePicture(merchantId, fotoPerfil);
+
+        if(!newUrlImage){
+            res.status(400).json({message: "Error ao atualizar imagem de perfil do usuario"});
+            return;
+        }
+        res.status(200).json(newUrlImage);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal Server Error"});
+    }
+}

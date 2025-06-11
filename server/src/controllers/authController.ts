@@ -15,7 +15,9 @@ function generateToken(id: string){
 
 export async function  signup(req: Request, res: Response){
     try {
-        const {nome, email, senha, nomeComercial, cpf, fotoPerfil} = req.body;
+        const {nome, email, senha, nomeComercial, cpf} = req.body;
+        const fotoPerfilDefault = "https://i.ibb.co/TxknvgR5/4e90b2cab3ba.png";
+
         const  merchantExists = await prisma.comerciante.findUnique({
             where: cpf
         })
@@ -24,14 +26,14 @@ export async function  signup(req: Request, res: Response){
             return;
         }
         const  hashPassword = hashSync(senha, 10);
-        const merchant = await prisma.comerciante.create({
+         await prisma.comerciante.create({
             data: {
                 nome,
                 email,
                 cpf,
                 nomeComercial,
                 senha: hashPassword,
-                fotoPerfil,
+                fotoPerfil: fotoPerfilDefault,
                 clientes:{
                     create: []
                 }
