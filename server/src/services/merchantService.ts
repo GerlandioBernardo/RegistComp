@@ -30,3 +30,12 @@ export async function updateMerchant(id: string, newMerchantData: comercianteTyp
     }) 
     return merchant;
 }
+
+export async function deleteMerchant(id: string){
+    const merchant = await prisma.comerciante.delete({
+        where:{
+            id
+        }
+    })
+    return merchant;
+}
