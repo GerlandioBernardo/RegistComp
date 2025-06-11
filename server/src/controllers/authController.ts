@@ -39,9 +39,7 @@ export async function  signup(req: Request, res: Response){
             }
         })
         res.status(201).json({
-            message: "Usuario criado com sucesso",
-            merchant: {...merchant, senha: undefined},
-            token: generateToken(merchant.id)
+            message: "Usuario criado com sucesso"
         })
 
 
@@ -49,6 +47,36 @@ export async function  signup(req: Request, res: Response){
         console.log(error);
         res.status(500).json({message: "Internal Server Error"});
     }
+}
+
+export async function login(req: Request, res: Response){
+    try {
+       const {email, senha} = req.body;
+        const merchant = await prisma.comerciante.findUnique({
+            where: email
+        })
+
+        if(!merchant){
+            res.status(404).json({message: "Usúario não possui cadastro "});
+            return;
+        }
+
+        const authorized = compareSync(senha, merchant.senha);
+
+        if(!authorized){
+            res.status(401).json({message: "Senha Incorreta"});
+            return;
+        }
+
+        res.status(200).json({
+            message: "Login realizado com sucesso",
+            token: generateToken(merchant.id)
+        }) 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal Server Error"})
+    }
+    
 }
 
 
