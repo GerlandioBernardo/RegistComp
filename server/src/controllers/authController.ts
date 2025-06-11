@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from "express";
 import {compareSync, hashSync} from "bcryptjs"
 import {prisma} from "../config/prisma"
-import jwt, {JwtPayload} from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -78,5 +78,6 @@ export async function login(req: Request, res: Response){
     }
     
 }
+
 
 
