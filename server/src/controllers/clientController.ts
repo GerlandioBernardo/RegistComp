@@ -27,7 +27,7 @@ export async function deletePurchase(req: Request, res:Response){
 
         const client = await customerService.findClientById(clientId);
         if(!client){
-            res.status(404).json({message: "Cliente não possui cadastro"});
+            res.status(404).json({message: "Cliente não cadastro"});
             return;
         }
         const deleteShopping = await customerService.deletePurchase(clientId);
@@ -36,6 +36,31 @@ export async function deletePurchase(req: Request, res:Response){
             return;
         }
         res.status(200).json({message: "Compras excluidas com sucesso"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal Server Error"});
+    }
+}
+
+export async function addPurchase(req:Request, res:Response){
+    try {
+        const {clientId, valuePuschasePrevious, purchaseId, purchase} = req.body;
+
+        const client = await customerService.findClientById(clientId);
+        if(!client){
+            res.status(404).json({message: "Cliente não cadastro"});
+            return;
+        }
+
+        const newpurchase = await customerService.addPurchase(purchaseId, purchase, valuePuschasePrevious);
+        if(!newpurchase){
+            res.status(400).json({message: "Error ao cadastra compras"});
+            return;
+        }
+
+        res.status(200).json({
+            message: "Compras cadastradas com sucesso",
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Internal Server Error"});

@@ -2,6 +2,7 @@ import {prisma} from "../config/prisma";
 import { clienteType } from "../types/clientType";
 import {compraType} from "../types/purchaseType";
 
+
 function calculateTotalPurchaseValue(compra: compraType){
     return compra.itens.reduce((acumulador, value) => {
         return acumulador + (value.precoUnitario * value.quantidade);
@@ -42,6 +43,32 @@ export async function createClient(merchantId: string, client: clienteType, purc
                     }
                 }
             }
+        },
+        select:{
+            id: true,
+            nome: true,
+            telefone: true,
+            cpf: true,
+            rua: true,
+            numero: true,
+            bairro: true,
+            cidade: true,
+            compras:{
+                select:{
+                    id: true,
+                    valorTotal: true,
+                    data: true,
+                    itens:{
+                        select:{
+                            id: true,
+                            nome: true,
+                            quantidade: true,
+                            precoUnitario: true,
+                            valorTotal: true
+                        }
+                    }
+                }
+            },
         }
     })
     return newClient;
@@ -54,5 +81,26 @@ export async function deletePurchase(clientId: string){
         }
     })
     return shoppingDelete;
+}
+export async function addPurchase(purchaseId: string, purchase: compraType, 
+    valuePuschasePrevious: number){
+    const purchases = await prisma.compra.update({
+        where:{
+            id: purchaseId
+        },
+        data:{
+            valorTotal: valuePuschasePrevious + calculateTotalPurchaseValue(purchase),
+            data: new Date(),
+                 itens:{
+                    create: purchase.itens.map((item) => ({
+                        nome: item.nome,
+                        precoUnitario: item.precoUnitario,
+                        quantidade: item.quantidade,
+                        valorTotal: item.precoUnitario * item.quantidade,
+                     }))
+                }
+            }
+    })
+    return purchases;
 }
 
