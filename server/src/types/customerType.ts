@@ -1,13 +1,13 @@
 import { compraType } from "./purchaseType";
 
-export type customerType = {
+export type clienteType = {
     id: string;
     nome: string;
     cpf: string;
     telefone: string;
     rua: string;
     numero: number;
-    barrio: string
+    bairro: string
     cidade: string;
     estado: string;
     comercianteId: string;
