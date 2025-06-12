@@ -1,11 +1,20 @@
 import {prisma} from "../config/prisma";
-import { clienteType } from "../types/customerType";
+import { clienteType } from "../types/clientType";
 import {compraType} from "../types/purchaseType";
 
 function calculateTotalPurchaseValue(compra: compraType){
     return compra.itens.reduce((acumulador, value) => {
         return acumulador + (value.precoUnitario * value.quantidade);
     }, 0)
+}
+
+export async function findClientById(clientId: string){
+    const client = await prisma.cliente.findUnique({
+        where:{
+            id: clientId
+        }
+    })
+    return client;
 }
 
 export async function createClient(merchantId: string, client: clienteType, purchase: compraType){
@@ -36,5 +45,14 @@ export async function createClient(merchantId: string, client: clienteType, purc
         }
     })
     return newClient;
+}
+
+export async function deletePurchase(clientId: string){
+    const shoppingDelete = await prisma.compra.deleteMany({
+        where:{
+            clienteId: clientId
+        }
+    })
+    return shoppingDelete;
 }
 

@@ -1,4 +1,4 @@
-import { customerType } from "./customerType";
+import { customerType } from "./clientType";
 
 export type comercianteType = {
     id: string;
