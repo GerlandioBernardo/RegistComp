@@ -75,12 +75,12 @@ export async function createClient(merchantId: string, client: clienteType, purc
 }
 
 export async function deletePurchase(clientId: string){
-    const shoppingDelete = await prisma.compra.deleteMany({
+    const purchaseDelete = await prisma.compra.deleteMany({
         where:{
             clienteId: clientId
         }
     })
-    return shoppingDelete;
+    return purchaseDelete;
 }
 export async function addPurchase(purchaseId: string, purchase: compraType, 
     valuePuschasePrevious: number){
@@ -102,5 +102,14 @@ export async function addPurchase(purchaseId: string, purchase: compraType,
             }
     })
     return purchases;
+}
+
+export async function deleteItemPurchase(id: string){
+    const itemDelete = await prisma.itemCompra.delete({
+        where:{
+            id
+        }
+    })
+    return itemDelete;
 }
 
