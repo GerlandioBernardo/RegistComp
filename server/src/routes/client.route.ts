@@ -1,8 +1,8 @@
 import {Router} from "express";
-import {createClient, deletePurchase, 
-    addPurchase, deleteItemPurchase, updateClient} from "../controllers/clientController";
+import {createClient, updateClient} from "../controllers/clientController";
 import { authMiddleware } from "../middlewares/auth";
 import { checkClientExists } from "../middlewares/checkClientExists";
+import {deletePurchase, deleteItemPurchase, addPurchase} from "../controllers/purchaseController"
 
 const clientRoute = Router();
 
