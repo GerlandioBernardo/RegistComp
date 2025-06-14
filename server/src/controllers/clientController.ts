@@ -21,15 +21,31 @@ export async function createClient(req: Request, res: Response){
         res.status(500).json({message: "Internal Server Error"});
     }
 }
+
+export async function updateClient(req: Request, res: Response){
+    try {
+        const {clientId, newDataClient} = req.body;
+        
+        const newData = await clientService.updateClient(clientId, newDataClient);
+        if(!newData){
+            res.status(400).json({message: "Error ao atualizar dados do cliente"});
+            return;
+        }
+        res.status(200).json({
+            message: "Dados do cliente atualizado com sucesso",
+            newDataClient: newData
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Internal Server Error"});
+    }
+}
+
+
 export async function deletePurchase(req: Request, res:Response){
     try {
         const {clientId} = req.params;
 
-        const client = await clientService.findClientById(clientId);
-        if(!client){
-            res.status(404).json({message: "Cliente não cadastro"});
-            return;
-        }
         const deleteShopping = await clientService.deletePurchase(clientId);
         if(deleteShopping.count === 0){
             res.status(404).json({message: "Nenhuma compra encontrada para esse cliente"});
@@ -44,13 +60,7 @@ export async function deletePurchase(req: Request, res:Response){
 
 export async function addPurchase(req:Request, res:Response){
     try {
-        const {clientId, valuePuschasePrevious, purchaseId, purchase} = req.body;
-
-        const client = await clientService.findClientById(clientId);
-        if(!client){
-            res.status(404).json({message: "Cliente não cadastro"});
-            return;
-        }
+        const {valuePuschasePrevious, purchaseId, purchase} = req.body;
 
         const newpurchase = await clientService.addPurchase(purchaseId, purchase, valuePuschasePrevious);
         if(!newpurchase){
@@ -69,13 +79,9 @@ export async function addPurchase(req:Request, res:Response){
 
 export async function deleteItemPurchase(req: Request, res: Response){
     try {
-        const {clientId, itemPurchaseId} = req.params;
+        const {itemPurchaseId} = req.params;
+        
 
-        const client = await clientService.findClientById(clientId);
-        if(!client){
-            res.status(404).json({message: "Cliente não cadastro"});
-            return;
-        }
         const itemDelete = await clientService.deleteItemPurchase(itemPurchaseId);
         if(!itemDelete){
             res.status(404).json({message: "Nenhuma compra encontrada para esse cliente"});

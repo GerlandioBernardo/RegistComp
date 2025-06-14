@@ -7,6 +7,6 @@ const rootRoute = Router();
 
 rootRoute.use('/auth', authRoute);
 rootRoute.use('/merchant', merchantRoute);
-rootRoute.use('/customer', clientRoute);
+rootRoute.use('/client', clientRoute);
 
 export default rootRoute;

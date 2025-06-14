@@ -74,6 +74,25 @@ export async function createClient(merchantId: string, client: clienteType, purc
     return newClient;
 }
 
+export async function updateClient(id: string, newDataClient: clienteType){
+    const newData = await prisma.cliente.update({
+        where:{
+            id
+        }, 
+        data:{
+            ...(newDataClient.nome && {nome: newDataClient.nome}),
+            ...(newDataClient.cpf && {cpf: newDataClient.cpf}),
+            ...(newDataClient.telefone && {telefone: newDataClient.telefone}),
+            ...(newDataClient.rua && {rua: newDataClient.rua}),
+            ...(newDataClient.numero && {numero: newDataClient.numero}),
+            ...(newDataClient.bairro && {bairro: newDataClient.bairro}),
+            ...(newDataClient.cidade && {cidade: newDataClient.cidade}),
+            ...(newDataClient.estado && {estado: newDataClient.estado}),
+        }
+    })
+    return newData
+}
+
 export async function deletePurchase(clientId: string){
     const purchaseDelete = await prisma.compra.deleteMany({
         where:{
