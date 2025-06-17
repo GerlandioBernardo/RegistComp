@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import * as clientService from "../services/clientService";
+import { clienteType } from "../types/clientType";
 
 export async function createClient(req: Request, res: Response){
     try {
