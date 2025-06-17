@@ -9,10 +9,14 @@ function calculateTotalPurchaseValue(compra: compraType){
     }, 0)
 }
 
-export async function findClientById(clientId: string){
+export async function findClientByIdAndMerchant(cpf: string, comercianteId: string){
     const client = await prisma.cliente.findUnique({
         where:{
-            id: clientId
+            cpf_comercianteId:{
+                cpf,
+                comercianteId 
+            }
+            
         }
     })
     return client;

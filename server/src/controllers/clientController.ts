@@ -1,10 +1,15 @@
 import {Request, Response} from "express";
 import * as clientService from "../services/clientService";
-import { clienteType } from "../types/clientType";
 
 export async function createClient(req: Request, res: Response){
     try {
         const {merchantId, client, purchase} = req.body;
+
+        const clientExists = await clientService.findClientByIdAndMerchant(client.cpf, merchantId)
+        if(clientExists){
+            res.status(409).json({message: "Cliente já possui cadastro"});
+            return;
+        }
 
         const newClient = await clientService.createClient(merchantId, client, purchase);
         if(!newClient){
