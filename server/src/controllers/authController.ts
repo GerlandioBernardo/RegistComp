@@ -19,7 +19,9 @@ export async function  signup(req: Request, res: Response){
         const fotoPerfilDefault = "https://i.ibb.co/TxknvgR5/4e90b2cab3ba.png";
 
         const  merchantExists = await prisma.comerciante.findUnique({
-            where: cpf
+            where: {
+                cpf
+            }
         })
         if(merchantExists){
             res.status(409).json({message: "Usuario já cadastrado"});
@@ -41,7 +43,7 @@ export async function  signup(req: Request, res: Response){
             }
         })
         res.status(201).json({
-            message: "Usuario criado com sucesso"
+            message: "Usuario cadastrado com sucesso"
         })
 
 
@@ -55,7 +57,9 @@ export async function login(req: Request, res: Response){
     try {
        const {email, senha} = req.body;
         const merchant = await prisma.comerciante.findUnique({
-            where: email
+            where: {
+                email
+            }
         })
 
         if(!merchant){
