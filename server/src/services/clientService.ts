@@ -92,6 +92,13 @@ export async function updateClient(id: string, newDataClient: clienteType){
             ...(newDataClient.bairro && {bairro: newDataClient.bairro}),
             ...(newDataClient.cidade && {cidade: newDataClient.cidade}),
             ...(newDataClient.estado && {estado: newDataClient.estado}),
+        },
+        include:{
+            compras: {
+                include:{
+                    itens: true
+                }
+            }
         }
     })
     return newData

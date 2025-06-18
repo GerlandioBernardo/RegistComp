@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {cpf} from "cpf-cnpj-validator";
-import {compraSchema} from "./purchaseSchema";
+import {compra} from "./purchaseSchema";
 
 export const clienteSchema = z.object({
     
@@ -45,5 +45,5 @@ export const clienteSchema = z.object({
 
 export const clienteCompraSchema = z.object({
   client: clienteSchema,
-  purchase: compraSchema
+  purchase: compra
 });

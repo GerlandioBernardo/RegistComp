@@ -8,6 +8,6 @@ const purchaseRoute = Router({mergeParams: true});
 
 purchaseRoute.delete('/', deletePurchase);
 purchaseRoute.post('/:purchaseId', checkClientExists, validationMiddleware(compraSchema), addPurchase);
-purchaseRoute.delete('/:itemPurchaseId', deleteItemPurchase);
+purchaseRoute.delete('/item/:itemPurchaseId', deleteItemPurchase);
 
 export default purchaseRoute;

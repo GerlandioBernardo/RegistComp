@@ -25,7 +25,10 @@ export async function addPurchase(purchaseId: string, purchase: compraType,
                         valorTotal: item.precoUnitario * item.quantidade,
                      }))
                 }
-            }
+        },
+        include:{
+            itens: true
+        }
     })
     return purchases;
 }

@@ -6,7 +6,8 @@ export async function addPurchase(req:Request, res:Response){
         const {purchaseId} = req.params;
         const {valuePuschasePrevious, purchase} = req.body;
 
-        const newpurchase = await purchaseService.addPurchase(purchaseId, purchase, valuePuschasePrevious);
+        const newpurchase = await purchaseService.addPurchase(purchaseId, purchase, 
+            valuePuschasePrevious);
         if(!newpurchase){
             res.status(400).json({message: "Error ao cadastra compras"});
             return;
@@ -14,6 +15,7 @@ export async function addPurchase(req:Request, res:Response){
 
         res.status(200).json({
             message: "Compras cadastradas com sucesso",
+            newPurchases: newpurchase
         });
     } catch (error) {
         console.log(error);

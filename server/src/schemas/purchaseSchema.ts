@@ -15,10 +15,13 @@ const itemCompraSchema = z.object({
 })
 
 
-export const compraSchema = z.object({
-
+export const compra = z.object({
     itens: z.array(itemCompraSchema).min(1, {
         message: "Deve haver pelo menos um item a ser comprado",
     }),
-
 })
+export const compraSchema = z.object({
+    valuePuschasePrevious: z.number(),
+    purchase: compra
+})
+

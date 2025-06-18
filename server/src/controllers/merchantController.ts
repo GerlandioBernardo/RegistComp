@@ -31,7 +31,10 @@ export  async function updateMerchant(req: Request, res: Response){
             return;
         }
         const merchant = await merchantService.updateMerchant(merchantId, newMerchantData);
-        res.status(200).json(merchant);
+        res.status(200).json({
+            message: "Dados atualizados com sucesso",
+            merchant
+        });
 
     } catch (error) {
         console.log(error);

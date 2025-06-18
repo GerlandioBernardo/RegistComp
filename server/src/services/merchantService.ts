@@ -15,7 +15,15 @@ export async function getClients(id: string){
             id
         },
         select:{
-            clientes: true
+            clientes:{
+                include:{
+                    compras: {
+                        include:{
+                            itens: true
+                        }
+                    }
+                }
+            }
         }
     })
     return clients;
