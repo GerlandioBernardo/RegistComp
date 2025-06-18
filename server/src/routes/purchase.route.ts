@@ -4,10 +4,10 @@ import { validationMiddleware } from "../middlewares/validationMiddleware";
 import { deleteItemPurchase, deletePurchase, addPurchase } from "../controllers/purchaseController";
 import { compraSchema } from "../schemas/purchaseSchema";
 
-const purchaseRoute = Router();
+const purchaseRoute = Router({mergeParams: true});
 
 purchaseRoute.delete('/', deletePurchase);
-purchaseRoute.post('/', checkClientExists, validationMiddleware(compraSchema), addPurchase);
+purchaseRoute.post('/:purchaseId', checkClientExists, validationMiddleware(compraSchema), addPurchase);
 purchaseRoute.delete('/:itemPurchaseId', deleteItemPurchase);
 
 export default purchaseRoute;

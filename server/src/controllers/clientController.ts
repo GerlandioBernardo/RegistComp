@@ -30,7 +30,8 @@ export async function createClient(req: Request, res: Response){
 
 export async function updateClient(req: Request, res: Response){
     try {
-        const {clientId, newDataClient} = req.body;
+        const {clientId} = req.params;
+        const {newDataClient} = req.body;
         
         const newData = await clientService.updateClient(clientId, newDataClient);
         if(!newData){

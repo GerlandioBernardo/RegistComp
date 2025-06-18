@@ -3,7 +3,8 @@ import * as purchaseService from "../services/purchaseService";
 
 export async function addPurchase(req:Request, res:Response){
     try {
-        const {valuePuschasePrevious, purchaseId, purchase} = req.body;
+        const {purchaseId} = req.params;
+        const {valuePuschasePrevious, purchase} = req.body;
 
         const newpurchase = await purchaseService.addPurchase(purchaseId, purchase, valuePuschasePrevious);
         if(!newpurchase){
