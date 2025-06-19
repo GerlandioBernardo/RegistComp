@@ -11,6 +11,6 @@ merchantRoute.patch('/', authMiddleware, updateMerchant);
 merchantRoute.delete('/', authMiddleware, deleteMerchant);
 
 //rota para upload de imagem
-merchantRoute.patch('/imageProfile', authMiddleware, uploadFileMiddleware, updateProfilePicture);
+merchantRoute.patch('/imageProfile',uploadFileMiddleware, authMiddleware,  updateProfilePicture);
 
 export default merchantRoute;
