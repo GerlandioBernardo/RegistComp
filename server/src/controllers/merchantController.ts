@@ -6,11 +6,6 @@ export async function getClients(req: Request, res: Response){
     try {
         const {merchantId} = req.body;
 
-        const merchantExists = await merchantService.findMerchantById(merchantId);
-        if(!merchantExists){
-            res.status(404).json({message: "Usuario não existente"});
-            return;
-        }
         const clients = await merchantService.getClients(merchantId);
         res.status(200).json(clients);
 
@@ -24,12 +19,6 @@ export  async function updateMerchant(req: Request, res: Response){
     try {
         const {merchantId, newMerchantData} = req.body;
 
-        const merchantExists = await merchantService.findMerchantById(merchantId);
-
-        if(!merchantExists){
-            res.status(404).json({message: "Usuario não existente"});
-            return;
-        }
         const merchant = await merchantService.updateMerchant(merchantId, newMerchantData);
         res.status(200).json({
             message: "Dados atualizados com sucesso",
@@ -46,12 +35,6 @@ export  async function updateMerchant(req: Request, res: Response){
 export async function deleteMerchant(req: Request, res: Response){
     try {
         const {merchantId} = req.body;
-
-        const merchantExists = await merchantService.findMerchantById(merchantId);
-        if(!merchantExists){
-            res.status(404).json({message: "Usuario não existente"});
-            return;
-        }
 
         const merchant = await merchantService.deleteMerchant(merchantId);
         
@@ -72,13 +55,8 @@ export async function deleteMerchant(req: Request, res: Response){
 
 export async function updateProfilePicture(req: Request, res: Response){
     try {
-        const {merchantId, fotoPerfil} = req.body
-
-        const merchantExists = await merchantService.findMerchantById(merchantId);
-        if(!merchantExists){
-            res.status(404).json({message: "Usuario não existente"});
-            return;
-        }
+        const {merchantId, fotoPerfil} = req.body;
+        
         const newUrlImage = await merchantService.updateProfilePicture(merchantId, fotoPerfil);
 
         if(!newUrlImage){
