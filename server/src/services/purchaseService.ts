@@ -6,28 +6,48 @@ function calculateTotalPurchaseValue(compra: compraType){
         return acumulador + (value.precoUnitario * value.quantidade);
     }, 0)
 }
-
+export async function findPurchasesByClientId(clientId: string){
+    const purchase = await prisma.compra.findMany({
+        where:{
+            clienteId: clientId
+        }
+    })
+    return purchase;
+}
 
 export async function addPurchase(purchaseId: string, purchase: compraType, 
-    valuePuschasePrevious: number){
-    const purchases = await prisma.compra.update({
+    valuePuschasePrevious: number, clientId: string){
+    const purchases = await prisma.compra.upsert({
         where:{
             id: purchaseId
-        },
-        data:{
+        }, 
+        update:{
             valorTotal: valuePuschasePrevious + calculateTotalPurchaseValue(purchase),
             data: new Date(),
-                 itens:{
-                    create: purchase.itens.map((item) => ({
-                        nome: item.nome,
-                        precoUnitario: item.precoUnitario,
-                        quantidade: item.quantidade,
-                        valorTotal: item.precoUnitario * item.quantidade,
-                     }))
-                }
+            itens:{
+                create: purchase.itens.map((item) => ({
+                    nome: item.nome,
+                    precoUnitario: item.precoUnitario,
+                    quantidade: item.quantidade,
+                    valorTotal: item.precoUnitario * item.quantidade,
+               }))
+            }
+        },
+        create:{
+            valorTotal: calculateTotalPurchaseValue(purchase),
+            clienteId: clientId,
+            itens:{
+                create: purchase.itens.map((item) => ({
+                    nome: item.nome,
+                    precoUnitario: item.precoUnitario,
+                    quantidade: item.quantidade,
+                    valorTotal: item.precoUnitario * item.quantidade,
+                 }))
+            }
+
         },
         include:{
-            itens: true
+            itens: true,
         }
     })
     return purchases;

@@ -3,11 +3,11 @@ import * as purchaseService from "../services/purchaseService";
 
 export async function addPurchase(req:Request, res:Response){
     try {
-        const {purchaseId} = req.params;
+        const {clientId ,purchaseId} = req.params;
         const {valuePuschasePrevious, purchase} = req.body;
 
         const newpurchase = await purchaseService.addPurchase(purchaseId, purchase, 
-            valuePuschasePrevious);
+            valuePuschasePrevious, clientId);
         if(!newpurchase){
             res.status(400).json({message: "Error ao cadastra compras"});
             return;

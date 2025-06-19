@@ -1,5 +1,5 @@
 import {prisma} from "../config/prisma";
-import { clienteType } from "../types/clientType";
+import {clienteType } from "../types/clientType";
 import {compraType} from "../types/purchaseType";
 
 
